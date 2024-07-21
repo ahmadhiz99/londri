@@ -13,7 +13,7 @@ import {
   DropdownItem
 } from "@nextui-org/react";
 import TableComponent from "../../components/TableComponent";
-import { axiosInstance, axiosInstanceOriginal, tokenCurr } from "../../lib/axios";
+import { axiosInstance, axiosInstanceEnv, axiosInstanceOriginal, tokenCurr } from "../../lib/axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -83,17 +83,34 @@ const Home = () => {
   const addTransaction = async () =>{
     console.log('[TRANSACTIONS]',form);
     try {
-      const response = await axiosInstanceOriginal.post("/api/v1/bills",{
-          customerId: 'b32eed7d-052a-4711-bcad-0bc577654883',
-          billDetails: [
-              {
-                  'product': {
-                      'id': form.id
-                  },
-                  'qty': form.qty
-              }
-          ]
-        })
+      const response = await axiosInstance.post(
+        "/bills",
+        {
+            // customerId: 'b32eed7d-052a-4711-bcad-0bc577654883',
+            // billDetails: [
+            //     {
+            //         'product': {
+            //             'id': form.id
+            //         },
+            //         'qty': form.qty
+            //     }
+            // ]
+            customerId: "b32eed7d-052a-4711-bcad-0bc577654883",
+            billDetails: [
+                {
+                    "product": {
+                        "id": "e2f7be9c-0b63-4064-bf53-6830b40fd63b"
+                    },
+                    "qty": 3
+                }
+            ]
+        },
+        {
+          headers: {
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJlbmlnbWFjYW1wIiwiZXhwIjoxNzIxNTkzNjc0LCJpYXQiOjE3MjE1OTAwNzQsInVzZXJJZCI6ImRhNGFkODhiLTk5YjItNGJkZi04Y2M3LTU2M2Q0NjFkNTBlZSIsInJvbGUiOiJhZG1pbiIsInNlcnZpY2VzIjpudWxsfQ.qnCROTrH1c8nK1MzoX3mYAfqYyuF8FWLumBZ7Bsr7m0`,
+          },
+        }
+      )
         console.log('[ADD TRANSACTION]',response.data)
 
         // if(response.data.status.code == 201){ //if success
