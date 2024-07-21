@@ -6,23 +6,19 @@ import {
   ModalBody, 
   ModalFooter,
   useDisclosure,
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownSection,
-  DropdownItem
 } from "@nextui-org/react";
 import TableComponent from "../../components/TableComponent";
 import { axiosInstance, axiosInstanceEnv, axiosInstanceOriginal, tokenCurr } from "../../lib/axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 const Home = () => {
   const {isOpen, onOpen, onOpenChange,openModal} = useDisclosure();
   
   const [Transaksi, setTransaksi] = useState([]);
   const [Product, setProduct] = useState([]);
+  const [Customer, setCustomer] = useState([]);
+  
   const [form, setForm] = useState({
     customerId:null,
     idProduct:null,
@@ -141,6 +137,17 @@ const Home = () => {
               </ModalHeader>
               <ModalBody>
                 <div>
+
+                <select
+                    name="idProduct"
+                    className="w-full my-3 p-2 bg-gray-50 rounded-lg"
+                    value={form.idProduct}
+                    onChange={handleChangeInput}
+                  >
+                    {Product?.map((products,idx)=>(
+                      <option value={products.id}>{products.name}</option>
+                    ))}
+                  </select>
 
                 <select
                     name="idProduct"
